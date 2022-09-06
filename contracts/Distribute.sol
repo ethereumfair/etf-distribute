@@ -28,8 +28,9 @@ contract Distribute is Ownable {
 
     function withdraw() public {
         require(distributes[msg.sender] != 0, "no distribute");
-        TransferHelper.safeTransferETH(msg.sender, distributes[msg.sender]);
+        uint bal = distributes[msg.sender];
         distributes[msg.sender] = 0;
+        TransferHelper.safeTransferETH(msg.sender, bal);
     }
 
     function setDistribute(DistributeParam[] memory dbs) public onlyOwner {
